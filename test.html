@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery-1.8.3.js"></script>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		ul,li{
+			list-style: none;
+		}
+		img{
+			display: block;
+		}
+		.view,.view-two{
+			width:800px;
+			height: 350px;
+			position:relative;
+			margin:100px auto;
+			/*overflow: hidden;*/
+		}
+		.img,.img-two{
+			width:3200px;
+			margin:0 auto;
+		}
+		
+		
+		.img img{
+			width:800px;
+			/*height: 540px;*/
+			position: absolute;
+			top:0;
+			left:0;
+			display: none;
+		}
+		.btn{
+			width:20px;
+			height: 20px;
+			background-color: green;
+			float:left;
+			margin:0 30px;
+		}
+		.view ul{
+			width:320px;
+			height: 20px;
+			overflow: hidden;
+			position: absolute;
+			bottom: 20px;
+			left: 50%;
+			margin-left: -160px;
+		}
+		.left,.right,.left-two,.right-two{
+			font-size:50px;
+			color:purple;
+			position: absolute;
+			top:50%;
+		}
+		.left,.left-two{
+			left:20px;
+		}
+		.right,.right-two{
+			right:20px;
+		}
+		/*
+		second
+		 */
+		.img-two{
+			overflow: hidden;
+		}
+		.img-two img{
+			width:800px;
+			float:left;
+		}
+		span{
+			padding:100px;
+			border:1px solid green;
+			margin:200px;
+		}
+		.box{
+			margin-bottom:100px;
+		}
+	</style>
+</head>
+<body>
+	<span>hello</span>
+	<div class="box"></div>
+	<div class="view">
+		<div class="img">
+			<img src="images/a.jpg" alt="">
+			<img src="images/b.jpg" alt="">
+			<img src="images/c.png" alt="">
+			<img src="images/d.jpg" alt="">
+		</div>
+		<ul>
+			<li class="btn"></li>
+			<li class="btn"></li>
+			<li class="btn"></li>
+			<li class="btn"></li>
+		</ul>
+		<div class="left"><<</div>
+		<div class="right">>></div>
+	</div>
+
+	<div class="view-two">
+		<div class="img-two">
+			<img src="images/a.jpg" alt="">
+			<img src="images/b.jpg" alt="">
+			<img src="images/c.png" alt="">
+			<img src="images/d.jpg" alt="">
+		</div>
+		<div class="left-two"><<</div>
+		<div class="right-two">>></div>
+	</div>
+</body>
+<script>
+	$('.img img').eq(0).css({display:"block"});
+	$('.view li').eq(0).css({backgroundColor:"orange"});
+	var x=0,flag=true;
+	$('.right').click(function(){
+		if(flag){
+			flag=false;
+			$('.view li').css({backgroundColor:"green"});
+			var count=x;
+			x+=1;
+			if(x>3){
+				x=0;
+			}
+			$('.img img').eq(x).css({left:800,display:'block'});
+			$('.img img').eq(x).animate({left:0},1000,function(){
+				flag=true;
+			});
+			$('.img img').eq(count).animate({left:-800},1000);
+			$('.view li').eq(x).css({backgroundColor:"orange"});
+		}		
+	});
+	$('.left').click(function(){
+		if(flag){
+			flag=false;
+			$('.view li').css({backgroundColor:"green"});
+			var count=x;
+			x-=1;
+			if(x<0){
+				x=3;
+			}
+			$('.img img').eq(x).css({left:-800,display:'block'});
+			$('.img img').eq(x).animate({left:0},1000,function(){
+				flag=true;
+			});
+			$('.img img').eq(count).animate({left:800},1000);
+			$('.view li').eq(x).css({backgroundColor:"orange"});
+		}		
+	});
+	$('.btn').click(function(){
+		if(flag){
+			flag=false;
+			$('.view li').css({backgroundColor:"green"});
+			var count=x;
+			x=$(this).index();		
+				console.log(x+"---"+count);
+			if(x>count){
+				$('.img img').eq(x).css({left:800,display:'block'});
+				$('.img img').eq(x).animate({left:0},1000,function(){
+					flag=true;
+				});
+				$('.img img').eq(count).animate({left:-800},1000);
+				$('.view li').eq(x).css({backgroundColor:"orange"});
+			}else if(x<count){
+				$('.img img').eq(x).css({left:-800,display:'block'});
+				$('.img img').eq(x).animate({left:0},1000,function(){
+					flag=true;
+				});
+				$('.img img').eq(count).animate({left:800},1000);
+				$('.view li').eq(x).css({backgroundColor:"orange"});
+			}
+		}		
+	})
+</script>
+<script>
+	$('.img-two img:first').clone(true).appendTo($('.img-two'));
+	$('.img-two').css({width:$(".img-two img").length*800});
+	var x=0;
+	$('.right-two').click(function(){
+		x++;
+		if(x>4){
+			$('.img-two').css({marginLeft:0});
+			x=1;
+		}
+		$('.img-two').animate({marginLeft:-800*x},1000,function(){
+
+		})
+	});
+	$('.left-two').click(function(){
+		x--;
+		if(x<0){
+			$('.img-two').css({marginLeft:-3200});
+			x=3;
+		}
+		$('.img-two').animate({marginLeft:-800*x},1000,function(){
+
+		})
+	})
+</script>
+<script>
+	
+	if([]){
+		console.log('1');
+	}else{
+		console.log(2)
+	}
+	if({})	{
+		console.log('1');
+	}else{
+		console.log(2)
+	}
+
+
+</script>
+</html>
