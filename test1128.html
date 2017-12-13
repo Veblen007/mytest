@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script  src="jquery-1.8.3.js"></script>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		.box{
+			height: 1000px;
+			line-height: 1000px;
+			text-align: center;
+			font-size:100px;
+			color:#fff;
+		}
+		.list{
+			width:80px;
+			position: fixed;
+			top:30%;
+			left:30px;
+			display: none;
+		}
+		.list li{
+			height: 30px;
+			border-bottom: 1px solid purple;
+			background-color: blue;
+			margin-top:2px;
+		}
+		.to-top{
+			width:100px;
+			height: 50px;
+			background-color: lightblue;
+			position: fixed;
+			bottom:30px;
+			right: 20px;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="parent">
+		<div class="box" style="background:purple;">1</div>
+		<div class="box" style="background:green;">2</div>
+		<div class="box" style="background:orange;">3</div>
+		<div class="box" style="background:pink;">4</div>
+	</div>
+	<ul class="list">
+		<li>11</li>
+		<li>12</li>
+		<li>13</li>
+		<li>14</li>
+	</ul>
+	<div class="to-top">返回顶部</div>
+</body>
+<script>
+	$(".to-top").click(function(){
+		$('body,html').animate({scrollTop:0});
+	});
+	$(window).scroll(function(){
+		var sct=$('body').scrollTop()||$('html').scrollTop();
+		// console.log(sct)
+		if(sct>500){
+			$('.to-top').show();
+			$('.list').show();			
+		}else{
+			$('.to-top').hide();
+			$('.list').hide();
+		}
+		$('.parent .box').each(function(i){
+			// var tp=$(this).offset().top;
+			
+			if($(this).offset().top-sct<100 && $(this).offset().top>sct){
+				// console.log(tp);
+				$(".list li").css({background:"lightblue"}).eq(i).css({background:"yellow"});
+			}
+		})
+	})
+	$('.list li').click(function(){
+		console.log($(this).index());
+		$('body,html').animate({scrollTop:$('.parent .box').eq($(this).index()).offset().top});
+	})
+</script>
+</html>
